@@ -5,19 +5,21 @@ from util.utils import accuracy, plotter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def log(filename):
-    logging.basicConfig(level=logging.INFO)
+def log(filename, logger, debug):
+    level = logging.DEBUG if debug else logging.INFO
+    logging.basicConfig(level=level)
     if filename: 
         handler = logging.handlers.WatchedFileHandler(os.path.join(".", "logs", filename+'.log'))
         formatter = logging.Formatter(logging.BASIC_FORMAT)
         handler.setFormatter(formatter)
-        logger.setLevel(logging.INFO)
+        logger.setLevel(level)
         logger.addHandler(handler)
+    return logger
 
-def train(data, model, epochs, batch_size, optimizer, validate=True, print_epochs=True, plot=True, logfile=None):
+def train(data, model, epochs, batch_size, optimizer, validate=True, print_epochs=False, plot=True, logfile=None):
 
     logger = logging.getLogger(__name__)
-    log(logfile)
+    logger = log(logfile, logger, print_epochs)
     model = model.to(device)
     train_ep_loss, val_ep_loss = [], []
     train_ep_acc, val_ep_acc = [], []
@@ -85,4 +87,4 @@ def train(data, model, epochs, batch_size, optimizer, validate=True, print_epoch
         plotter(train_ep_loss, val_ep_loss, "Loss")
         plotter(train_ep_acc, val_ep_acc, "Accuracy")
 
-    return model, val_Acc.item()*100
+    return model, val_Acc.item()
