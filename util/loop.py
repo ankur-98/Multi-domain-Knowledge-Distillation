@@ -88,6 +88,7 @@ def train(data, model, epochs, batch_size, optimizer,
         plotter(train_ep_loss, val_ep_loss, "Loss")
         plotter(train_ep_acc, val_ep_acc, "Accuracy")
 
+    logging.shutdown()
     return model, val_Acc.item() if validate else None
 
 def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alpha=0.5, T=1.0,
@@ -117,12 +118,12 @@ def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alph
 
                 y_pred = Student_Model(x)
                 z_pred = Student_Model.Z(x)
-                
-                CE_loss = torch.nn.functional.nll_loss(y_pred, y, reduction='sum') / x.shape[0]
-                KD_loss = torch.nn.KLDivLoss(reduction='sum')(torch.log_softmax(z_pred/T, dim=1), torch.softmax(z/T, dim=1)) * (T**2) / x.shape[0]
 
-                loss = ((1-alpha) * CE_loss + (alpha) * KD_loss) / len(Data.keys())
-                acc = accuracy(y_pred, y) / len(Data.keys())
+                KD_loss = torch.nn.KLDivLoss(reduction='sum')(torch.log_softmax(z_pred/T, dim=1), torch.softmax(z/T, dim=1)) * (T**2)
+                CE_loss = torch.nn.functional.nll_loss(y_pred, y, reduction='sum')
+
+                loss = ((1-alpha) * CE_loss + (alpha) * KD_loss) / x.shape[0]
+                acc = accuracy(y_pred, y)
                 train_loss.append(loss.item())
                 train_acc.append(acc.item())
                 loss.backward()
@@ -153,11 +154,11 @@ def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alph
                         y_pred = Student_Model(x)
                         z_pred = Student_Model.Z(x)
                 
-                        CE_loss = torch.nn.functional.nll_loss(y_pred, y, reduction='sum') / x.shape[0]
-                        KD_loss = torch.nn.KLDivLoss(reduction='sum')(torch.log_softmax(z_pred/T, dim=1), torch.softmax(z/T, dim=1)) * (T**2) / x.shape[0]
+                        KD_loss = torch.nn.KLDivLoss(reduction='sum')(torch.log_softmax(z_pred/T, dim=1), torch.softmax(z/T, dim=1)) * (T**2)
+                        CE_loss = torch.nn.functional.nll_loss(y_pred, y, reduction='sum')
 
-                        loss = ((1-alpha) * CE_loss + (alpha) * KD_loss) / len(Data.keys())
-                        acc = accuracy(y_pred, y) / len(Data.keys())
+                        loss = ((1-alpha) * CE_loss + (alpha) * KD_loss) / x.shape[0]
+                        acc = accuracy(y_pred, y)
                         val_acc.append(acc.item())
                         val_loss.append(loss.item())
 
@@ -183,4 +184,5 @@ def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alph
         plotter(train_ep_loss, val_ep_loss, "Loss")
         plotter(train_ep_acc, val_ep_acc, "Accuracy")
 
+    logging.shutdown()
     return Student_Model, val_Acc.item() if validate else None
