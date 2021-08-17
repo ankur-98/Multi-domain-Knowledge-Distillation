@@ -1,4 +1,5 @@
 import random
+import math
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
@@ -29,4 +30,15 @@ def plotter(train, valid, ylabel=None):
     if len(valid) > 0: legend.append('valid')
     plt.legend(legend)
     plt.show()
-    
+
+class TemperatureAnnealing:
+    """Cosine based annealing funtion to anneal temperature parameter."""
+    def __init__(self, T_max, epochs):
+        super(TemperatureAnnealing, self).__init__()
+        self.T_max = T_max
+        self.itr_end = epochs
+    def cos_annealing(self, epoch):
+        return (1 + math.cos(math.pi * (epoch/ self.itr_end))) / 2
+    def __call__(self, epoch):
+        T = self.cos_annealing(epoch) * self.T_max
+        return 1 if T < 1 else T
