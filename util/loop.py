@@ -93,7 +93,7 @@ def train(data, model, epochs, batch_size, optimizer,
     return model, val_Acc.item() if validate else None
 
 def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alpha=0.5, T=1.0,
-                  validate=True, print_epochs=False, plot=True, logfile=None):
+                  validate=True, print_epochs=False, plot=True, logfile=None, checkpoint_val_best=None):
 
     logger = logging.getLogger(__name__)
     logger = log(logfile, logger, print_epochs)
@@ -175,18 +175,31 @@ def student_train(Data, Student_Model, epochs, batch_size_ratio, optimizer, alph
             logger.debug(f'Train acc: {train_Acc.item():.5%}')
             if validate: logger.debug(f'Validation acc: {val_Acc.item():.5%}')
 
-    logger.info(f"\nEpoch {epoch+1}")
-    logger.info(f'Train loss: {train_Loss.item()}')
-    if validate: logger.info(f'Validation loss: {val_Loss.item()}')
-    logger.info(f'Train acc: {train_Acc.item():.5%}')
-    if validate: logger.info(f'Validation acc: {val_Acc.item():.5%}')
+    if checkpoint_val_best is None:
+        display_train_loss = train_Loss.item()
+        display_valid_loss = val_Loss.item()
+        display_train_acc = train_Acc.item()
+        display_valid_acc = val_Acc.item()
+    else:
+        idx = np.argmax(val_ep_loss) if checkpoint_val_best == "loss" else np.argmax(val_ep_acc)
+        display_train_loss = train_ep_loss[idx]
+        display_valid_loss = val_ep_loss[idx]
+        display_train_acc = train_ep_acc[idx]
+        display_valid_acc = val_ep_acc[idx]
+        
+    if checkpoint_val_best is None: logger.info(f"\nEpoch {epoch+1}")
+    else: logger.info(f"\nCheckpoint Epoch {idx+1} based on val_{checkpoint_val_best}")
+    logger.info(f'Train loss: {display_train_loss}')
+    if validate: logger.info(f'Validation loss: {display_valid_loss}')
+    logger.info(f'Train acc: {display_train_acc:.5%}')
+    if validate: logger.info(f'Validation acc: {display_valid_acc:.5%}')
 
     if plot:
         plotter(train_ep_loss, val_ep_loss, "Loss")
         plotter(train_ep_acc, val_ep_acc, "Accuracy")
 
     logging.shutdown()
-    return Student_Model, val_Acc.item() if validate else None
+    return Student_Model, display_valid_acc if validate else None
 
 def student_train_KD_annealing(Data, Student_Model, epochs, batch_size_ratio, optimizer, alpha=0.5, T_max=1.0,
                   validate=True, print_epochs=False, plot=True, logfile=None, checkpoint_val_best=None):
