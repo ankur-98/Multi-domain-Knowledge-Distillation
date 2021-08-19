@@ -6,7 +6,7 @@
 
 __Time Limit:__ 1 week
 
-_Completed in 4 days with code and report._
+_Completed in 4 days._
 
 ### [Assignment PDF](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject.pdf) | [Report]()
 
@@ -53,3 +53,8 @@ Use the provided `environment.yml` file to install the dependencies into an envi
 conda env create
 conda activate knowledge_distil
 ```
+
+## References
+1. [Hinton, G., Vinyals, O. and Dean, J., 2015. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531.](https://arxiv.org/pdf/1503.02531.pdf)
+2. [Jafari, A., Rezagholizadeh, M., Sharma, P. and Ghodsi, A., 2021. Annealing Knowledge Distillation. arXiv preprint arXiv:2104.07163.](https://aclanthology.org/2021.eacl-main.212.pdf)
+3. [AdamW and Super-convergence is now the fastest way to train neural nets by Sylvain Gugger and Jeremy Howard.](https://www.fast.ai/2018/07/02/adam-weight-decay/)
