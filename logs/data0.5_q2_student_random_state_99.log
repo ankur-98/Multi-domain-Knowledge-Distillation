@@ -1,0 +1,6 @@
+INFO:util.loop:
+Epoch 30000
+INFO:util.loop:Train loss: 1.9978246688842773
+INFO:util.loop:Validation loss: 3.153437852859497
+INFO:util.loop:Train acc: 98.75000%
+INFO:util.loop:Validation acc: 98.33333%

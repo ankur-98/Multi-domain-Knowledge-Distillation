@@ -1,0 +1,6 @@
+INFO:util.loop:
+Checkpoint Epoch 6542 based on val_loss
+INFO:util.loop:Train loss: 0.0005988319171592593
+INFO:util.loop:Validation loss: 0.0024067966733127832
+INFO:util.loop:Train acc: 100.00000%
+INFO:util.loop:Validation acc: 100.00000%
