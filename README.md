@@ -33,7 +33,7 @@ The assigment is worked on a binary classification data of 3 different domains. 
 The python notebooks of the assignment experiments on the 4 datasets are here:
 * [Data with complete seperation](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject_d1.00.ipynb)
 * [Data with 75% of complete seperation](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject_d0.75.ipynb)
-* [Data with 50% of complete seperation](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject_d0.50.ipynb)
+* [Data with 50% of complete seperation](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject_d0.5.ipynb)
 * [Data with 25% of complete seperation](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject_d0.25.ipynb)
 
 ## Setting up environment
