@@ -4,11 +4,9 @@
 
 ## Assignment
 
-__Time Limit:__ 1 week
+__Time Limit:__ 1 week.
 
-_Completed in 4 days._
-
-### [Assignment PDF](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject.pdf) | [Report]()
+### [Assignment](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/MiniProject.pdf) | [Report](https://github.com/ankur-98/Multi-domain-Knowledge-Distillation/blob/master/Report.pdf)
 
 There are 3 primary tasks of the assignment.
 * Train a model on the mixed domain
@@ -21,6 +19,7 @@ The following improvement techniques have been adopted:
 * Knowledge distillation annealing.
 
 A few basic suggested methods not implemented due to hardware limitations and tuning time required:
+* Adding batchnormalization to the fully connected layers before ReLU activation.
 * Changing Adam optimizer to AdamW.
 * Using cyclic learning rate schedulers for super convergence.
 
